@@ -16,7 +16,8 @@ export type ConfigJsonDiscoveryK8S =
   & {
     discovery: 'k8s',
     k8s: {
-      tag: string
+      label?: string
+      namespace: string
     }
   }
 

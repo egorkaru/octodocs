@@ -1,15 +1,8 @@
 {
   "url": "http://192.168.222.54:9000/",
-  "discovery": "map",
-  "services": {
-    "offer-request": null,
-    "user-request": null,
-    "wishlist": null,
-    "catalog": "Каталог",
-    "media-catalog": "Медиа каталог",
-    "security": "Security",
-    "company-profile": "Профиль компании",
-    "email": null,
-    "pricelists": "Прайс-листы"
+  "discovery": "k8s",
+  "k8s": {
+    "namespace": "test-1",
+    "label": "akka.lightbend.com/service-name"
   }
 }

@@ -36,7 +36,9 @@ const mergeLabelsWithDefaults = (labels: Partial<ConfigJsonDiscoveryK8SLabels> =
 
 export const getServicesFromK8S = async (config: ConfigJsonDiscoveryK8S['k8s']): Promise<Service[]> => {
   const kubeConfig = new k8s.KubeConfig()
-  kubeConfig.loadFromCluster()
+
+  kubeConfig.loadFromDefault()
+  //kubeConfig.loadFromCluster()
 
   const kubeApiClient = kubeConfig.makeApiClient(k8s.Core_v1Api)
 

@@ -19,7 +19,7 @@ const PodListToServices = (pods: k8s.V1PodList, labels: ConfigJsonDiscoveryK8SLa
   return pods.items.map(
     pod => ({
       id: pod.metadata.labels[labels.id],
-      name: pod.metadata.labels[labels.name]
+      name: capitalize(pod.metadata.labels[labels.name]),
     })
   )
 }
@@ -37,15 +37,26 @@ const mergeLabelsWithDefaults = (labels: Partial<ConfigJsonDiscoveryK8SLabels> =
 export const getServicesFromK8S = async (config: ConfigJsonDiscoveryK8S['k8s']): Promise<Service[]> => {
   const kubeConfig = new k8s.KubeConfig()
 
-  kubeConfig.loadFromDefault()
-  //kubeConfig.loadFromCluster()
+  const k8sConfig = config.config
+  if (k8sConfig) {
+    if (k8sConfig.local) {
+      kubeConfig.loadFromDefault()
+    } else {
+      kubeConfig.loadFromClusterAndUser(
+        k8sConfig.cluster,
+        k8sConfig.user,
+      )
+    }
+  } else {
+    kubeConfig.loadFromCluster()
+  }
 
   const kubeApiClient = kubeConfig.makeApiClient(k8s.Core_v1Api)
 
   const labels = mergeLabelsWithDefaults(config.labels, AppConfig.k8s.default_labels)
 
   const { body } : { body?: k8s.V1PodList } = await kubeApiClient
-    .listNamespacedPod(config.namespace, undefined, undefined, undefined, labels.discovery)
+    .listNamespacedPod(config.namespace, undefined, undefined, undefined, undefined, labels.discovery)
     .catch((err) => {
       console.error(err)
       return { body: undefined}

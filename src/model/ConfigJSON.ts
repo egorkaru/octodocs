@@ -11,12 +11,18 @@ export type ConfigJsonDiscoveryMap =
     }
   }
 
+export type ConfigJsonDiscoveryK8SLabels = {
+  discovery: string
+  id: string
+  name: string
+} 
+
 export type ConfigJsonDiscoveryK8S =
   ConfigJsonCommonPart
   & {
     discovery: 'k8s',
     k8s: {
-      label?: string
+      labels?: Partial<ConfigJsonDiscoveryK8SLabels>
       namespace: string
     }
   }

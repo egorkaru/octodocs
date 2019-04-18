@@ -1,6 +1,7 @@
 import { Service } from './../../model/Service';
-import { ConfigJsonDiscoveryMap, ConfigJsonDiscoveryK8S } from './../../model/ConfigJSON';
+import { ConfigJsonDiscoveryMap, ConfigJsonDiscoveryK8S, ConfigJsonDiscoveryK8SLabels } from './../../model/ConfigJSON';
 import * as k8s from '@kubernetes/client-node'
+import { config as AppConfig } from '../../config'
 
 const capitalize = (str: string): string => `${str.charAt(0).toUpperCase()}${str.slice(1)}`
 
@@ -14,13 +15,23 @@ export const ServicesMapToServices = (services: ConfigJsonDiscoveryMap['services
     }))
 }
 
-const PodListToServices = (pods: k8s.V1PodList): Service[] => {
+const PodListToServices = (pods: k8s.V1PodList, labels: ConfigJsonDiscoveryK8SLabels): Service[] => {
   return pods.items.map(
     pod => ({
-      id: pod.metadata.labels.octodocs_id || pod.metadata.labels.app,
-      name: pod.metadata.labels.octodocs_name || pod.metadata.labels.app,
+      id: pod.metadata.labels[labels.id],
+      name: pod.metadata.labels[labels.name]
     })
   )
+}
+
+const mergeLabelsWithDefaults = (labels: Partial<ConfigJsonDiscoveryK8SLabels> = {}, defaults: ConfigJsonDiscoveryK8SLabels): ConfigJsonDiscoveryK8SLabels => {
+  const name = labels.name
+    ? labels.name
+    : labels.id
+      ? labels.id
+      : defaults.name
+
+  return { ...defaults, ...labels, name }
 }
 
 export const getServicesFromK8S = async (config: ConfigJsonDiscoveryK8S['k8s']): Promise<Service[]> => {
@@ -29,13 +40,15 @@ export const getServicesFromK8S = async (config: ConfigJsonDiscoveryK8S['k8s']):
 
   const kubeApiClient = kubeConfig.makeApiClient(k8s.Core_v1Api)
 
+  const labels = mergeLabelsWithDefaults(config.labels, AppConfig.k8s.default_labels)
+
   const { body } : { body?: k8s.V1PodList } = await kubeApiClient
-    .listNamespacedPod(config.namespace, undefined, undefined, undefined, config.label)
+    .listNamespacedPod(config.namespace, undefined, undefined, undefined, labels.discovery)
     .catch((err) => {
       console.error(err)
       return { body: undefined}
     })
 
-  if (body) return Promise.resolve(PodListToServices(body))
+  if (body) return Promise.resolve(PodListToServices(body, labels))
   return Promise.resolve([])
 }

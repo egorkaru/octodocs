@@ -3,6 +3,10 @@
   "discovery": "k8s",
   "k8s": {
     "namespace": "test-1",
-    "label": "akka.lightbend.com/service-name"
+    "labels": {
+      "discovery": "akka.lightbend.com/service-name",
+      "id": "app",
+      "name": "app"
+    }
   }
 }

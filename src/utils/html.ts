@@ -5,6 +5,7 @@ const html = (bundle: {}) =>
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name='viewport' content='initial-scale=1.0, width=device-width'>
     <title>${config.title}</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>

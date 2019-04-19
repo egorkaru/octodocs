@@ -30,10 +30,6 @@ export const getHTML = (bundle?: ParcelBundle) => {
     <meta name='viewport' content='initial-scale=1.0, width=device-width'>
     <title>${config.title}</title>
     <link rel="stylesheet" href="${realPathOnServer(assets.css)}">
-    <script src="script.js"></script>
-    <script>
-      window.__bundle = ${bundle}
-    </script>
   </head>
   <body>
     <div id="${config.react.containerId}"><div>

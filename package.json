@@ -12,6 +12,7 @@
     "build": "yarn build-server; yarn build-app;",
     "start": "NODE_ENV=production node src/server.js"
   },
+  "bin": "./bin/octodocs.js",
   "repository": "git@github.com:egorkaru/octodocs.git",
   "author": "Egor Rudinskiy <egor@egor.win>",
   "license": "MIT",

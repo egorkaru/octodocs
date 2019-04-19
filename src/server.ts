@@ -7,7 +7,7 @@ async function setup (handler: typeof main) {
   return handler
 }
 
-if (!isDev) {
+if (!isDev()) {
   startServer()
 }
 

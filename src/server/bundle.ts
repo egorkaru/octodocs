@@ -3,6 +3,8 @@ import * as path from 'path';
 import { isDev } from '../utils/dev';
 import { hasParam } from '../utils/cli';
 
+const dev = isDev()
+
 function resolve(dir: string): string {
   return path.join(__dirname, dir)
 }
@@ -11,15 +13,14 @@ const bundlerOptions: ParcelOptions = {
   outDir: resolve('../dist/client'),
   outFile: 'bundle.js',
   contentHash: true,
-  minify: !isDev,
-  hmr: isDev,
-  sourceMaps: isDev,
-  detailedReport: !isDev,
+  minify: !dev,
+  hmr: dev,
+  sourceMaps: dev,
+  detailedReport: !dev,
 }
 
-export const bundle = async (development: boolean = isDev): Promise<ParcelBundle | undefined> => {
+export const bundle = async (development: boolean = isDev()): Promise<ParcelBundle | undefined> => {
   if (!development) return undefined
-
   const Bundler = require('parcel-bundler')
   const bundler = new Bundler(resolve('./App.tsx'), bundlerOptions)
   return bundler.bundle()

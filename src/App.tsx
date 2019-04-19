@@ -36,7 +36,7 @@ class App extends React.Component<{}, AppState> {
       <Layout title="Все сервисы">
         {
           this.state.isLoading
-            ? <LoadingSpinner/>
+            ? <LoadingSpinner isFullScreen={true}/>
             : <SwaggerUI services={this.state.list && this.state.list.services}/>
         }
       </Layout>

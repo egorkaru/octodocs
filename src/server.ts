@@ -1,3 +1,4 @@
+import { bundle } from './bundle';
 import { getHTML } from './utils/html';
 import { getAppConfig } from './utils/config';
 import { getYALM, listServices } from './api/api';
@@ -5,17 +6,13 @@ import { parse } from 'url'
 import { IncomingMessage, ServerResponse } from 'http';
 import { routes } from './api/routes';
 import { createProxyServer } from 'http-proxy'
-import * as Bundler from 'parcel-bundler'
 import { send } from 'micro';
 import * as path from 'path';
-import { truncate } from 'fs';
 
 const match = require('micro-route/match')
 const handler = require('serve-handler');
 
 const config = getAppConfig()
-
-const dev = process.env.NODE_ENV !== 'production'
 
 const proxy = createProxyServer()
 
@@ -32,15 +29,6 @@ function resolve(dir: string): string {
   return path.join(__dirname, dir)
 }
 
-const bundler = new Bundler(
-  resolve('./App.tsx'),
-  {
-    outDir: resolve('../dist/client'),
-    outFile: 'bundle.js',
-    watch: dev,
-    contentHash: true,
-  },
-)
 async function main (req: IncomingMessage, res: ServerResponse) {
   if (isAPI(req)) {
     if (isOctodocsApi(req)) {
@@ -52,8 +40,7 @@ async function main (req: IncomingMessage, res: ServerResponse) {
     return proxy.web(req, res, { target: config.url, headers: { Host: parse(config.url).host || config.url } })
   }
   if (isIndexPage(req)) {
-    const bundle = await bundler.bundle()
-    return send(res, 200, getHTML(bundle))
+    return send(res, 200, getHTML(await bundle()))
   }
   if (isStatic(req)) {
     return handler(req, res, {

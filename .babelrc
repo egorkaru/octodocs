@@ -1,6 +1,9 @@
 {
   "presets": [
-    "next/babel",
-    "@zeit/next-typescript/babel"
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "styled-jsx/babel"
   ]
 }

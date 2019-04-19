@@ -25,9 +25,12 @@
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-helmet": "^5.2.0",
+    "styled-jsx": "^3.2.1",
     "swagger-ui": "^3.22.1"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "@types/axios": "^0.14.0",
     "@types/http-proxy": "^1.17.0",
     "@types/micro": "^7.3.3",

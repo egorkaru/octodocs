@@ -1,4 +1,4 @@
-import { ConfigJSON } from './model/ConfigJSON';
+import { getAppConfig } from './utils/config';
 import { getYALM, listServices } from './api/api';
 import { parse } from 'url'
 import * as next from 'next'
@@ -7,7 +7,7 @@ import { routes } from './api/routes';
 import { createProxyServer } from 'http-proxy'
 
 const match = require('micro-route/match')
-const config : ConfigJSON = require('../config.json')
+const config = getAppConfig()
 
 const dev = process.env.NODE_ENV !== 'production'
 

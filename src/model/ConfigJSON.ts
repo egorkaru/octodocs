@@ -1,6 +1,7 @@
-type ConfigJsonCommonPart = {
-  url: string
-}
+type ConfigJsonCommonPart =
+  {
+    url: string
+  }
 
 export type ConfigJsonDiscoveryMap =
   ConfigJsonCommonPart
@@ -11,12 +12,45 @@ export type ConfigJsonDiscoveryMap =
     }
   }
 
+export type ConfigJsonDiscoveryK8SLabels =
+  {
+    discovery: string
+    id: string
+    name: string
+  }
+
+type ConfigJsonDiscoveryK8SConfigRemote = 
+  {
+    local?: false
+    cluster: {
+      name: string,
+      server: string,
+      skipTLSVerify: boolean,
+    }
+    user: {
+      name: string,
+      token: string,
+    }
+  }
+
+type ConfigJsonDiscoveryK8SConfigLocal =
+  {
+    local: true
+  }
+
+
+export type ConfigJsonDiscoveryK8SConfig =
+  | ConfigJsonDiscoveryK8SConfigLocal
+  | ConfigJsonDiscoveryK8SConfigRemote
+
 export type ConfigJsonDiscoveryK8S =
   ConfigJsonCommonPart
   & {
     discovery: 'k8s',
     k8s: {
-      tag: string
+      labels?: Partial<ConfigJsonDiscoveryK8SLabels>
+      config?: ConfigJsonDiscoveryK8SConfig
+      namespace: string
     }
   }
 

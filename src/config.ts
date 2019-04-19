@@ -7,6 +7,8 @@ export const config = {
       id: 'octodocs_id',
       name: 'octodocs_name'
     }
+  },
+  react: {
+    containerId: '__octodocs'
   }
-  
 }

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { config } from '../config';
-import Head from 'next/head'
+import { Helmet } from "react-helmet";
+
 
 type LayoutProps = {
   title?: string
@@ -15,11 +16,9 @@ const Layout: React.FC<LayoutProps> = ({
     : config.title
   return (
     <>
-      <Head>
+      <Helmet>
         <title>{pageTitle}</title>
-        <meta charSet='utf-8' />
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-      </Head>
+      </Helmet>
       {children}
       <style jsx={true} global={true}>
         {`

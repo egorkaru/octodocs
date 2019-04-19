@@ -1,18 +1,18 @@
-import { ConfigJSON } from './model/ConfigJSON';
+import { bundle } from './bundle';
+import { getHTML } from './utils/html';
+import { getAppConfig } from './utils/config';
 import { getYALM, listServices } from './api/api';
 import { parse } from 'url'
-import * as next from 'next'
 import { IncomingMessage, ServerResponse } from 'http';
 import { routes } from './api/routes';
 import { createProxyServer } from 'http-proxy'
+import { send } from 'micro';
+import * as path from 'path';
 
 const match = require('micro-route/match')
-const config : ConfigJSON = require('../config.json')
+const handler = require('serve-handler');
 
-const dev = process.env.NODE_ENV !== 'production'
-
-const app = next({ dev, dir: `${__dirname}` })
-const handle = app.getRequestHandler()
+const config = getAppConfig()
 
 const proxy = createProxyServer()
 
@@ -21,10 +21,15 @@ const isOctodocsApi = (req: IncomingMessage) => match(req, '/api/octodocs/*')
 const isList = (req: IncomingMessage) => match(req, routes.list())
 const isGetYAML = (req: IncomingMessage) => match(req, routes.yaml(':service'))
 
-const isViewPage = (req: IncomingMessage) => match(req, '/view/:service')
+const isIndexPage = (req: IncomingMessage) => match(req, '/')
+
+const isStatic = (req: IncomingMessage) => match(req, '/static/*')
+
+function resolve(dir: string): string {
+  return path.join(__dirname, dir)
+}
 
 async function main (req: IncomingMessage, res: ServerResponse) {
-  const parsedUrl = parse(req.url || '', true)
   if (isAPI(req)) {
     if (isOctodocsApi(req)) {
       const listRoute = isList(req)
@@ -34,14 +39,20 @@ async function main (req: IncomingMessage, res: ServerResponse) {
     }
     return proxy.web(req, res, { target: config.url, headers: { Host: parse(config.url).host || config.url } })
   }
-  if (isViewPage(req)) {
-    return app.render(req, res, '/view', isViewPage(req).params, parsedUrl)
+  if (isIndexPage(req)) {
+    return send(res, 200, getHTML(await bundle()))
   }
-  return handle(req, res, parsedUrl)
+  if (isStatic(req)) {
+    return handler(req, res, {
+      rewrites: [{ source: 'static/client/:file', destination: '/client/:file' }],
+      public: 'dist',
+      directoryListing: false,
+    })
+  }
+  return send(res, 404)
 }
 
 async function setup (handler: typeof main) {
-  await app.prepare()
   return handler
 }
 

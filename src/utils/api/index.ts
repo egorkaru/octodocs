@@ -1,10 +1,10 @@
+import { getAppConfig } from './../config';
 import { ServicesMapToServices, getServicesFromK8S } from './services';
 import { APIListResponse } from '../../api/model';
-import { ConfigJSON } from '../../model/ConfigJSON';
 import { http } from '../http';
 import { Service } from '../../model/Service';
 
-const config : ConfigJSON = require('../../../config.json')
+const config = getAppConfig()
 
 export const getServicesList = async (): Promise<Service[]> => {
   if (config.discovery === 'map') return Promise.resolve(ServicesMapToServices(config.services))

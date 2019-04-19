@@ -9,10 +9,11 @@ import { createProxyServer } from 'http-proxy'
 import { send } from 'micro';
 import { config } from '../config';
 import { getParam } from '../utils/cli';
+import * as path from 'path';
 
 import micro from 'micro'
 
-const match = require('micro-route/match')
+const match = require('micro-route/match');
 const handler = require('serve-handler');
 
 const appConfig = getAppConfig()
@@ -44,7 +45,7 @@ export async function main (req: IncomingMessage, res: ServerResponse) {
   if (isStatic(req)) {
     return handler(req, res, {
       rewrites: [{ source: 'static/client/:file', destination: '/client/:file' }],
-      public: 'dist',
+      public: path.join(__dirname, '../../dist'),
       directoryListing: false,
     })
   }

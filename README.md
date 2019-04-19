@@ -2,10 +2,11 @@
 
 Агрегатор OpenAPI документации для микросервисов.
 
-## Доступные урлы
+## Запуск
 
-* /
-* /view/:service
+```
+yarn start --config path-to-config.json
+```
 
 ## Config.json
 

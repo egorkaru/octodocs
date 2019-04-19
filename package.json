@@ -17,6 +17,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@babel/polyfill": "^7.4.3",
     "@kubernetes/client-node": "^0.8.2",
     "axios": "^0.18.0",
     "http-proxy": "^1.17.0",
@@ -29,6 +30,9 @@
     "swagger-ui": "^3.22.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@types/axios": "^0.14.0",

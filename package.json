@@ -17,23 +17,18 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
     "@kubernetes/client-node": "^0.8.2",
     "axios": "^0.18.0",
     "http-proxy": "^1.17.0",
     "micro": "^9.3.3",
     "micro-route": "^2.5.0",
     "parcel-bundler": "^1.12.3",
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
-    "react-helmet": "^5.2.0",
-    "serve-handler": "^6.0.0",
-    "styled-jsx": "^3.2.1",
-    "swagger-ui": "^3.22.1"
+    "serve-handler": "^6.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
+    "@babel/polyfill": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
@@ -46,6 +41,11 @@
     "@types/styled-jsx": "^2.2.8",
     "concurrently": "^4.1.0",
     "micro-dev": "^3.0.0",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "react-helmet": "^5.2.0",
+    "styled-jsx": "^3.2.1",
+    "swagger-ui": "^3.22.1",
     "typescript": "^3.3.3"
   }
 }

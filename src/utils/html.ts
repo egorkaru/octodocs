@@ -1,6 +1,7 @@
 import { config } from './../config';
-const html = (bundle: {}) =>
-`
+import { ParcelBundle } from 'parcel-bundler';
+
+export const getHTML = (bundle: ParcelBundle) => `
 <!DOCTYPE html>
 <html>
   <head>

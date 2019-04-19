@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { APIListResponse } from '../api/model';
-import { httpGet } from './http';
-import { routes } from '../api/routes';
-import LoadingSpinner from '../components/LoadingSpinner';
-import SwaggerUI from '../components/SwaggerUI';
+import { APIListResponse } from './api/model';
+import { httpGet } from './utils/http';
+import { routes } from './api/routes';
+import LoadingSpinner from './components/LoadingSpinner';
+import SwaggerUI from './components/SwaggerUI';
 import * as ReactDOM from 'react-dom'
-import { config } from '../config';
-import Layout from '../components/Layout';
+import { config } from './config';
+import Layout from './components/Layout';
 
 type AppState = {
   list?: APIListResponse

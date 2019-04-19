@@ -1,4 +1,4 @@
-import * as Bundler from 'parcel-bundler'
+import { ParcelBundle , ParcelOptions } from 'parcel-bundler'
 import * as path from 'path';
 import { isDev } from './utils/dev';
 import { hasParam } from './utils/cli';
@@ -7,7 +7,7 @@ function resolve(dir: string): string {
   return path.join(__dirname, dir)
 }
 
-const bundlerOptions: Bundler.ParcelOptions = {
+const bundlerOptions: ParcelOptions = {
   outDir: resolve('../dist/client'),
   outFile: 'bundle.js',
   contentHash: true,
@@ -17,9 +17,12 @@ const bundlerOptions: Bundler.ParcelOptions = {
   detailedReport: !isDev,
 }
 
-export const bundle = async (development: boolean = isDev): Promise<Bundler.ParcelBundle | undefined> => {
+export const bundle = async (development: boolean = isDev): Promise<ParcelBundle | undefined> => {
+  if (!development) return undefined
+
+  const Bundler = require('parcel-bundler')
   const bundler = new Bundler(resolve('./App.tsx'), bundlerOptions)
-  return development ? bundler.bundle() : undefined
+  return bundler.bundle()
 }
 
 if (hasParam('build')) {

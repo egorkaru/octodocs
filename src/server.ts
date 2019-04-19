@@ -7,9 +7,12 @@ import { routes } from './api/routes';
 import { createProxyServer } from 'http-proxy'
 import * as Bundler from 'parcel-bundler'
 import { send } from 'micro';
-const path = require('path')
+import * as path from 'path';
+import { truncate } from 'fs';
 
 const match = require('micro-route/match')
+const handler = require('serve-handler');
+
 const config = getAppConfig()
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -22,6 +25,8 @@ const isList = (req: IncomingMessage) => match(req, routes.list())
 const isGetYAML = (req: IncomingMessage) => match(req, routes.yaml(':service'))
 
 const isIndexPage = (req: IncomingMessage) => match(req, '/')
+
+const isStatic = (req: IncomingMessage) => match(req, '/static/*')
 
 function resolve(dir: string): string {
   return path.join(__dirname, dir)
@@ -48,8 +53,14 @@ async function main (req: IncomingMessage, res: ServerResponse) {
   }
   if (isIndexPage(req)) {
     const bundle = await bundler.bundle()
-    console.log(bundle.assets)
     return send(res, 200, getHTML(bundle))
+  }
+  if (isStatic(req)) {
+    return handler(req, res, {
+      rewrites: [{ source: 'static/client/:file', destination: '/client/:file' }],
+      public: 'dist',
+      directoryListing: false,
+    })
   }
   return send(res, 404)
 }

@@ -1,7 +1,7 @@
 import { ParcelBundle , ParcelOptions } from 'parcel-bundler'
 import * as path from 'path';
-import { isDev } from './utils/dev';
-import { hasParam } from './utils/cli';
+import { isDev } from '../utils/dev';
+import { hasParam } from '../utils/cli';
 
 function resolve(dir: string): string {
   return path.join(__dirname, dir)

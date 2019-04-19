@@ -4,7 +4,9 @@
 
 ## Запуск
 
-``` yarn start --config path-to-config.json```
+```
+yarn start --config path-to-config.json
+```
 
 ## Config.json
 

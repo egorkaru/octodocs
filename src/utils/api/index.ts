@@ -1,3 +1,4 @@
+import { error } from './../cli';
 import { getAppConfig } from './../config';
 import { ServicesMapToServices, getServicesFromK8S } from './services';
 import { APIListResponse } from '../../api/model';
@@ -13,7 +14,7 @@ export const getServicesList = async (): Promise<Service[]> => {
     .get<APIListResponse>(config.service)
     .then(({ data }) => data.services)
     .catch((err) => {
-      console.error(err)
+      error(err)
       return []
     })
 }

@@ -1,7 +1,8 @@
+import { info } from './../utils/cli';
 import { isDev } from './../utils/dev';
 import { bundle } from './bundle';
 import { getHTML } from '../utils/html';
-import { getAppConfig } from '../utils/config';
+import { getAppConfig, getAppPort } from '../utils/config';
 import { getYALM, listServices } from '../api/api';
 import { parse } from 'url'
 import { IncomingMessage, ServerResponse } from 'http';
@@ -9,7 +10,6 @@ import { routes } from '../api/routes';
 import { createProxyServer } from 'http-proxy'
 import { send } from 'micro';
 import { config } from '../config';
-import { getParam } from '../utils/cli';
 import * as path from 'path';
 
 import micro from 'micro'
@@ -63,11 +63,11 @@ export async function main (req: IncomingMessage, res: ServerResponse) {
 
 export function startServer() {
   const server = micro(main)
-  const port = Number(getParam('port', false)) || 3000
+  const port = getAppPort()
 
   server.listen(port)
 
-  console.info(`
+  info(`
   ${config.title} is running on http://0.0.0.0:${port}/
   `)
 }

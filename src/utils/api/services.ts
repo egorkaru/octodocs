@@ -1,3 +1,4 @@
+import { error } from './../cli';
 import { Service } from './../../model/Service';
 import { ConfigJsonDiscoveryMap, ConfigJsonDiscoveryK8S, ConfigJsonDiscoveryK8SLabels } from './../../model/ConfigJSON';
 import * as k8s from '@kubernetes/client-node'
@@ -58,7 +59,7 @@ export const getServicesFromK8S = async (config: ConfigJsonDiscoveryK8S['k8s']):
   const { body } : { body?: k8s.V1PodList } = await kubeApiClient
     .listNamespacedPod(config.namespace, undefined, undefined, undefined, undefined, labels.discovery)
     .catch((err) => {
-      console.error(err)
+      error(err)
       return { body: undefined}
     })
 

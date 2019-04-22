@@ -16,10 +16,14 @@
     "prepublishOnly": "yarn build"
   },
   "bin": "./bin/octodocs.js",
-  "repository": "git@github.com:egorkaru/octodocs.git",
   "author": "Egor Rudinsky <egor@egor.win>",
+  "repository": "github:egorkaru/octodocs",
   "license": "Apache-2.0",
   "private": false,
+  "bugs": {
+    "url": "https://github.com/egorkaru/octodocs/issues"
+  },
+  "homepage": "https://github.com/egorkaru/octodocs#readme",
   "dependencies": {
     "@kubernetes/client-node": "^0.8.2",
     "axios": "^0.18.0",

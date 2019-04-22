@@ -16,7 +16,7 @@
   "bin": "./bin/octodocs.js",
   "repository": "git@github.com:egorkaru/octodocs.git",
   "author": "Egor Rudinskiy <egor@egor.win>",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "private": false,
   "dependencies": {
     "@kubernetes/client-node": "^0.8.2",

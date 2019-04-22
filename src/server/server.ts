@@ -1,3 +1,4 @@
+import { isDev } from './../utils/dev';
 import { bundle } from './bundle';
 import { getHTML } from '../utils/html';
 import { getAppConfig } from '../utils/config';
@@ -45,7 +46,9 @@ export async function main (req: IncomingMessage, res: ServerResponse) {
   if (isStatic(req)) {
     return handler(req, res, {
       rewrites: [{ source: 'static/client/:file', destination: '/client/:file' }],
-      public: path.join(__dirname, '../../dist'),
+      public: isDev()
+        ? path.join(__dirname, '../../dist')
+        : path.join(__dirname, '../../client'),
       directoryListing: false,
     })
   }
@@ -58,5 +61,7 @@ export function startServer() {
 
   server.listen(port)
 
-  console.info(`${config.title} is running on http://0.0.0.0:${port}/`)
+  console.info(`
+  ${config.title} is running on http://0.0.0.0:${port}/
+  `)
 }

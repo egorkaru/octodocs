@@ -1,0 +1,6 @@
+src/
+.cache/
+config.json
+tsconfig.*
+yarn.lock
+*.log

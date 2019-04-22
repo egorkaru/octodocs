@@ -1,7 +1,7 @@
 import { ParcelBundle , ParcelOptions } from 'parcel-bundler'
 import * as path from 'path';
 import { isDev } from '../utils/dev';
-import { hasParam } from '../utils/cli';
+import { hasParam, getParam } from '../utils/cli';
 
 const dev = isDev()
 
@@ -10,7 +10,7 @@ function resolve(dir: string): string {
 }
 
 const bundlerOptions: ParcelOptions = {
-  outDir: resolve('../dist/client'),
+  outDir: resolve(getParam('out', false) || '../dist/client'),
   outFile: 'bundle.js',
   contentHash: true,
   minify: !dev,
@@ -19,15 +19,15 @@ const bundlerOptions: ParcelOptions = {
   detailedReport: !dev,
 }
 
-export const bundle = async (development: boolean = isDev()): Promise<ParcelBundle | undefined> => {
+export const bundle = async (development: boolean = isDev(), path: string = './App.tsx'): Promise<ParcelBundle | undefined> => {
   if (!development) return undefined
   const Bundler = require('parcel-bundler')
-  const bundler = new Bundler(resolve('./App.tsx'), bundlerOptions)
+  const bundler = new Bundler(resolve(path), bundlerOptions)
   return bundler.bundle()
 }
 
 if (hasParam('build')) {
-  bundle(true)
+  bundle(true, getParam('in', false))
     .then(() => {
       console.info('Assets build succeeded')
       process.exit(0)

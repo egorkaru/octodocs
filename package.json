@@ -2,15 +2,15 @@
   "name": "octodocs",
   "version": "0.0.1",
   "description": "Агрегатор OpenAPI документации для микросервисов",
-  "main": "src/server.js",
+  "main": "dist/server/server.js",
   "scripts": {
     "watch-server": "tsc --project tsconfig.server.json --watch",
-    "build-server": "tsc --project tsconfig.server.json",
+    "build-server": "tsc --project tsconfig.server.json --outDir dist/server",
     "dev": "concurrently \"yarn watch-server\" \"yarn dev-app\"",
     "dev-app": "node src/server.js",
-    "build-app": "NODE_ENV=production node src/bundle.js --build",
+    "build-app": "NODE_ENV=production node dist/server/server/bundle.js --build --in ../../../src/App.tsx --out ../../client",
     "build": "yarn build-server; yarn build-app;",
-    "start": "NODE_ENV=production node src/server.js"
+    "start": "NODE_ENV=production node dist/server/server.js"
   },
   "bin": "./bin/octodocs.js",
   "repository": "git@github.com:egorkaru/octodocs.git",

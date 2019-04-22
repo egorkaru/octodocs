@@ -1,15 +1,30 @@
 import { isDev } from './dev';
 import { ConfigJSON } from './../model/ConfigJSON';
-import { hasParam, getParam } from './cli';
+import { error, getParam, exit, getParamWithDefault } from './cli';
 import * as path from 'path'
+import { config } from '../config';
 
-//TODO: rewrite
-export const getAppConfig = (): ConfigJSON => {
-  const configPath = hasParam('config')
-    ? path.join(process.cwd(), getParam('config')!)
-    : isDev()
-      ? './../../config.json'
-      : path.join(process.cwd(), getParam('config')!)
+const resolveConfig = (config: string): string => path.join(process.cwd(), config)
+const defaultConfigPath = './../../config.json'
 
-  return require(configPath)
+const showConfigParamRequiredError = () => {
+  error(`
+  --config is required!
+    
+    Try "octodocs --help" for more info
+  `);
+  exit(true)
 }
+
+export const getAppConfig = (): ConfigJSON => {
+  const pathFromCli = getParam('config', false)
+  if (!isDev() && typeof pathFromCli === 'undefined') showConfigParamRequiredError()
+
+  const configPath = pathFromCli
+    ? resolveConfig(pathFromCli)
+    : defaultConfigPath
+
+   return require(configPath)
+}
+
+export const getAppPort = (): number => Number(getParamWithDefault('port', String(config.port)))

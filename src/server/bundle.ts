@@ -1,7 +1,7 @@
 import { ParcelBundle , ParcelOptions } from 'parcel-bundler'
 import * as path from 'path';
-import { isDev } from '../utils/dev';
-import { hasParam, getParam } from '../utils/cli';
+import { isDev } from './../utils/dev';
+import { error, info, exit, hasParam, getParamWithDefault, getParam } from './../utils/cli';
 
 const dev = isDev()
 
@@ -10,7 +10,7 @@ function resolve(dir: string): string {
 }
 
 const bundlerOptions: ParcelOptions = {
-  outDir: resolve(getParam('out', false) || '../dist/client'),
+  outDir: resolve(getParamWithDefault('out', '../dist/client')),
   outFile: 'bundle.js',
   contentHash: true,
   minify: !dev,
@@ -29,11 +29,11 @@ export const bundle = async (development: boolean = isDev(), path: string = './A
 if (hasParam('build')) {
   bundle(true, getParam('in', false))
     .then(() => {
-      console.info('Assets build succeeded')
-      process.exit(0)
+      info('Assets build succeeded')
+      exit()
     })
     .catch(() => {
-      console.error('Assets build failed')
-      process.exit(1)
+      error('Assets build failed')
+      exit(true)
     })
 }

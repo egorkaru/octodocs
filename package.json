@@ -4,18 +4,20 @@
   "description": "Агрегатор OpenAPI документации для микросервисов",
   "main": "dist/server/server.js",
   "scripts": {
+    "build-clean": "rm -rf dist/",
+    "dev-clean": "find src/ -type f -name \"*.js\" -delete",
     "watch-server": "tsc --project tsconfig.server.json --watch",
     "build-server": "tsc --project tsconfig.server.json --outDir dist/server",
     "dev": "concurrently \"yarn watch-server\" \"yarn dev-app\"",
     "dev-app": "node src/server.js",
     "build-app": "NODE_ENV=production node dist/server/server/bundle.js --build --in ../../../src/App.tsx --out ../../client",
-    "build": "yarn build-server; yarn build-app;",
+    "build": "yarn build-clean; yarn build-server; yarn build-app;",
     "start": "NODE_ENV=production node dist/server/server.js",
     "prepublishOnly": "yarn build"
   },
   "bin": "./bin/octodocs.js",
   "repository": "git@github.com:egorkaru/octodocs.git",
-  "author": "Egor Rudinskiy <egor@egor.win>",
+  "author": "Egor Rudinsky <egor@egor.win>",
   "license": "Apache-2.0",
   "private": false,
   "dependencies": {

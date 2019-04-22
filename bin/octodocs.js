@@ -7,15 +7,15 @@ require('dotenv')
     path: path.resolve(__dirname, '.env')
   })
 
-const { hasParam } = require('../dist/server/utils/cli')
-const showHelp = hasParam('help', false) || hasParam('h', false)
+const { hasParams } = require('../dist/server/utils/cli')
+const showHelp = hasParams('help', 'h')
 
 if (showHelp) {
   console.info(`
   Usage: octodocs --config <config.json>
   
   <config.json> — path to your config.json file
-  --port        — specify port, default 3000
+  --port        — specify port, default ${require('../dist/server/config').port}
   --help, --h   — show this message
   `)
 } else {

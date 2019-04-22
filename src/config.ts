@@ -10,5 +10,6 @@ export const config = {
   },
   react: {
     containerId: '__octodocs'
-  }
+  },
+  port: 3000,
 }

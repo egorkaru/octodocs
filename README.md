@@ -26,8 +26,8 @@ or
 
 ```
 
+```
   $ octodocs --config config.json
-
 ```
 
 ## Config.json

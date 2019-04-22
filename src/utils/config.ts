@@ -11,7 +11,7 @@ const showConfigParamRequiredError = () => {
   error(`
   --config is required!
     
-    Try "octodocs --help" for more info
+  Try "octodocs --help" for more info
   `);
   exit(true)
 }

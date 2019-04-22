@@ -1,6 +1,6 @@
 {
   "name": "octodocs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Агрегатор OpenAPI документации для микросервисов",
   "main": "dist/server/server.js",
   "scripts": {

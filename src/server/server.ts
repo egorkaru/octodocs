@@ -45,7 +45,13 @@ export async function main (req: IncomingMessage, res: ServerResponse) {
   }
   if (isStatic(req)) {
     return handler(req, res, {
-      rewrites: [{ source: 'static/client/:file', destination: '/client/:file' }],
+      rewrites: [
+        {
+          source: 'static/client/:file',
+          destination: isDev()
+            ? '/client/:file'
+            : '/:file',
+        }],
       public: isDev()
         ? path.join(__dirname, '../../dist')
         : path.join(__dirname, '../../client'),

@@ -2,10 +2,32 @@
 
 Агрегатор OpenAPI документации для микросервисов.
 
-## Запуск
+## Installation
 
 ```
-yarn start --config path-to-config.json
+  npm install -g octodocs
+```
+
+or
+
+```
+  yarn global add octodocs
+```
+
+## Usage
+
+```
+
+  Usage: octodocs --config <config.json>
+
+      <config.json> — path to your config.json file
+      --port        — specify port, default 3000
+      --help, --h   — show this message
+
+```
+
+  $ octodocs --config config.json
+
 ```
 
 ## Config.json

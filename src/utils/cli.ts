@@ -3,10 +3,7 @@ export const info = console.info
 export const error = console.error
 export const exit = (error: boolean = false) => process.exit(error ? 1 : 0)
 
-export const hasParam = (param: string): boolean => {
-  const index = process.argv.indexOf(`--${param}`)
-  return index !== -1
-}
+export const hasParam = (param: string): boolean => process.argv.indexOf(`--${param}`) !== -1
 
 export const hasParams = (...params: string[]): boolean => params
   .map(hasParam)

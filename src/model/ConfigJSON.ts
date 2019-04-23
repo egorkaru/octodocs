@@ -1,6 +1,7 @@
 type ConfigJsonCommonPart =
   {
     url: string
+    api_resolver_url?: string
   }
 
 export type ConfigJsonDiscoveryMap =

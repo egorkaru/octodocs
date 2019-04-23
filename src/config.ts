@@ -12,4 +12,5 @@ export const config = {
     containerId: '__octodocs'
   },
   port: 3000,
+  api_resolver_url: '{{ url }}/_{{ service_id }}/openapi',
 }

@@ -34,7 +34,8 @@
     "http-proxy": "^1.17.0",
     "micro": "^9.3.3",
     "micro-route": "^2.5.0",
-    "serve-handler": "^6.0.0"
+    "serve-handler": "^6.0.0",
+    "underscore": "^1.9.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",

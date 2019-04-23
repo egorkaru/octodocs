@@ -26,9 +26,12 @@ export const loadYALM = async (serviceID: string) : Promise<string | undefined> 
   const host = config.url.endsWith('/')
     ? config.url.substr(0, config.url.length - 1)
     : config.url
-  const url = `${host}/${serviceID}/openapi`
+  const url = `${host}/_${serviceID}/openapi`
   return await http(400)
     .get<string>(url)
     .then(data => data.data)
-    .catch(() => undefined)
+    .catch((err) => {
+      error(err)
+      return undefined
+    })
 }

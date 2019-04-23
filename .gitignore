@@ -4,4 +4,4 @@ node_modules
 dist/
 *.log
 src/**/*.js
-config.json
+/config.json

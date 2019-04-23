@@ -4,7 +4,7 @@ import { error, getParam, exit, getParamWithDefault } from './cli';
 import * as path from 'path'
 import { config } from '../config';
 
-const resolveConfig = (config: string): string => path.join(process.cwd(), config)
+const resolveConfig = (config: string): string => path.resolve(process.cwd(), config)
 const defaultConfigPath = './../../config.json'
 
 const showConfigParamRequiredError = () => {

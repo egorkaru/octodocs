@@ -1,0 +1,8 @@
+{
+  "url": "http://0.0.0.0:9000/",
+  "discovery": "map",
+  "services": {
+    "petshop": null,
+    "another-shop": "Another Shop"
+  }
+}

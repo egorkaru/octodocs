@@ -1,0 +1,6 @@
+/.git
+/.cache
+/.github
+/src
+/node_modules
+/config.json

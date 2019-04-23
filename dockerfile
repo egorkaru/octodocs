@@ -15,4 +15,6 @@ RUN yarn link
 
 EXPOSE 8080
 
+ENTRYPOINT []
+
 CMD ["sh", "/app/docker/runner.sh"]

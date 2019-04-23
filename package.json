@@ -13,7 +13,10 @@
     "build-app": "NODE_ENV=production node dist/server/server/bundle.js --build --in ../../../src/App.tsx --out ../../client",
     "build": "yarn build-clean; yarn build-server; yarn build-app;",
     "start": "NODE_ENV=production node dist/server/server.js",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "build-docker-image": "docker build -t octodocs .",
+    "build-docker": "yarn build; yarn build-docker-image;",
+    "start-docker": "docker run --rm -it -p 8080:8080 octodocs"
   },
   "bin": "./bin/octodocs.js",
   "author": "Egor Rudinsky <egor@egor.win>",
